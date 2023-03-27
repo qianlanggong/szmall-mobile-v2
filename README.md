@@ -1,5 +1,5 @@
 # szmall-mobile-v2
-
+vue2+vue-router3+vux3+vant2+less:移动端电商商城
 ## Project setup
 ```
 yarn install

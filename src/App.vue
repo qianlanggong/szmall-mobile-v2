@@ -8,11 +8,16 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-
+import { getUser } from "./server";
 export default {
   name: "App",
   components: {
     HelloWorld,
+  },
+  mounted() {
+    getUser().then((data) => {
+      console.log(data.data);
+    });
   },
 };
 </script>

@@ -1,0 +1,1 @@
+# szmall-mobile-v2

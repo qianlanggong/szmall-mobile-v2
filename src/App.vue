@@ -2,13 +2,20 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
+    {{ a }}
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import store from "./store";
 import { getUser } from "./server";
 export default {
+  data() {
+    return {
+      a: store.state.goods.name,
+    };
+  },
   name: "App",
   components: {
     HelloWorld,
@@ -17,6 +24,8 @@ export default {
     getUser().then((data) => {
       console.log(data.data);
     });
+    store.commit("user/myMutation"); //mutation
+    store.dispatch("user/myAction"); //action
   },
 };
 </script>

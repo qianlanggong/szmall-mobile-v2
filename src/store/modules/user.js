@@ -1,6 +1,7 @@
 // state
 const state = {
   name: "我是user模块",
+  TOKEN: "0000",
 };
 // mutations
 const mutations = {

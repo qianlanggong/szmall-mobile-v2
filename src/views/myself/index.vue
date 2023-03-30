@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>我是index页面</div>
+  <div>我是meself页面</div>
 </template>
 <script>
 export default {};

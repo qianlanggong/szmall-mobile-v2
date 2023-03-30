@@ -6,50 +6,50 @@
 
       <div class="login">
         <form class="form">
-          <label for="chk" aria-hidden="true">Log in</label>
+          <label for="chk" aria-hidden="true">登录</label>
           <input
             class="input"
             type="text"
             name="text"
-            placeholder="account name"
+            placeholder="用户账号"
             required=""
           />
           <input
             class="input"
             type="password"
             name="pswd"
-            placeholder="Password"
+            placeholder="用户密码"
             required=""
           />
-          <button>Log in</button>
+          <button>登录</button>
         </form>
       </div>
 
       <div class="register">
         <form class="form">
-          <label for="chk" aria-hidden="true">Register</label>
+          <label for="chk" aria-hidden="true">注册</label>
           <input
             class="input"
             type="text"
             name="txt"
-            placeholder="Username"
+            placeholder="用户名"
             required=""
           />
           <input
             class="input"
             type="text"
             name="text"
-            placeholder="account name"
+            placeholder="用户账号"
             required=""
           />
           <input
             class="input"
             type="password"
             name="pswd"
-            placeholder="Password"
+            placeholder="用户密码"
             required=""
           />
-          <button>Register</button>
+          <button>注册</button>
         </form>
       </div>
     </div>

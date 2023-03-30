@@ -28,6 +28,7 @@ export default {
     });
     store.commit("user/myMutation"); //mutation
     store.dispatch("user/myAction"); //action
+    // localStorage.setItem("TOKEN", new Date().toISOString());
   },
 };
 </script>

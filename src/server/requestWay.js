@@ -20,7 +20,7 @@ export const post = (url, param) => {
   });
 };
 //封装对应的通用的request请求
-export const request = (url, method, data) => {
+export const requests = (url, method, data) => {
   return new Promise((resolve, reject) => {
     instance[method](url, data)
       .then((res) => resolve(res))

@@ -5,7 +5,7 @@
       <input type="checkbox" id="chk" aria-hidden="true" />
 
       <div class="login">
-        <form class="form">
+        <div class="form">
           <label for="chk" aria-hidden="true">登录</label>
           <input
             class="input"
@@ -13,6 +13,7 @@
             name="text"
             placeholder="用户账号"
             required=""
+            v-model="username"
           />
           <input
             class="input"
@@ -20,9 +21,10 @@
             name="pswd"
             placeholder="用户密码"
             required=""
+            v-model="password"
           />
-          <button>登录</button>
-        </form>
+          <button @click="loginEvent">登录</button>
+        </div>
       </div>
 
       <div class="register">
@@ -41,6 +43,7 @@
             name="text"
             placeholder="用户账号"
             required=""
+            v-model="username"
           />
           <input
             class="input"
@@ -48,6 +51,7 @@
             name="pswd"
             placeholder="用户密码"
             required=""
+            v-model="password"
           />
           <button>注册</button>
         </form>
@@ -56,12 +60,38 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
+import store from "@/store";
 export default {
   name: "loginVue",
   data() {
-    return {};
+    return {
+      //收集账号与密码
+      username: "",
+      password: "",
+    };
   },
   components: {},
+  methods: {
+    async loginEvent() {
+      //整理参数
+      const { username, password } = this;
+      let data = { username, password };
+      //在发登录请求
+      try {
+        //登录成功
+        let meg = await store.dispatch("user/login", data);
+        let goPath = this.$route.query.redirect || "/home";
+        //跳转到被拦截页面
+        // localStorage.setItem("TOKEN", new Date().toISOString());
+        Toast(meg);
+        this.$router.push(goPath);
+      } catch (error) {
+        Toast(error.message);
+        console.log(error.message);
+      }
+    },
+  },
 };
 </script>
 <style scoped>

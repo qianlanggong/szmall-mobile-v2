@@ -2,27 +2,41 @@
 import store from "@/store";
 //配置全局路由守卫
 //参数路由器 router
-export const createRouterGuards = async (router) => {
-  await router.beforeEach((to, from, next) => {
+export const createRouterGuards = (router) => {
+  router.beforeEach(async (to, from, next) => {
     /* must call `next` */
     //to:去的那个路由的信息
     //from:从那个路由而来的信息
     //next:放行函数!!!!!!
     //用户是否登录:取决于仓库里面是否有token！！！
     //token
-    let hasToken = store.state.user.TOKEN;
+    let hasToken = store.state.user.token;
     //用户信息
     let hasNickName = store.state.user.nickName;
     //   如果没有token,跳转到登录页面
-    if (!hasToken) return next("/login");
-    //   路径判断
-    if (to.name == "login") {
-      next("/home");
+    if (hasToken) {
+      next()
+      //用户登录了,不能去login
+      if (to.path == "/login") {
+        next("/home");
+      } else {
+        //用户登陆了,而且还有用户信息【去的并非是login】
+        isHasNick(hasNickName, next);
+      }
     } else {
-      //如果跳转的除login之外的页面：调用
-      isHasNick(hasNickName, next);
+      //用户未登录||目前的判断都是放行.将来这里会'回手掏'增加一些判断
+      //用户未登录:不能进入/trade、/pay、/paysuccess、/center、/center/myorder  /center/teamorder
+      let toPath = to.path;
+      if (
+        toPath.indexOf("myself") != -1 ||
+        toPath.indexOf("shopCart") != -1 ||
+        toPath.indexOf("center") != -1
+      ) {
+        next("/login?redirect=" + toPath);
+      } else {
+        next();
+      }
     }
-    next();
   });
   //如果跳转的除login之外的页面：定义
 };

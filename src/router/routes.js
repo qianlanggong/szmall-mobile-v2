@@ -2,7 +2,7 @@
 const routes = [
   // 重定向
   {
-    path: "/",
+    path: "*",
     redirect: "/home",
   },
   {

@@ -10,7 +10,6 @@
 
 <script>
 import store from "./store";
-import { getUser } from "./server";
 import footerVue from "@/common/footer.vue";
 
 export default {
@@ -23,9 +22,6 @@ export default {
   },
   components: { footerVue },
   mounted() {
-    getUser().then((data) => {
-      console.log(data.data);
-    });
     store.commit("user/myMutation"); //mutation
     store.dispatch("user/myAction"); //action
     // localStorage.setItem("TOKEN", new Date().toISOString());

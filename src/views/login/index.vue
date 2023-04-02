@@ -34,7 +34,7 @@
             class="input"
             type="text"
             name="txt"
-            placeholder="用户名"
+            placeholder="匿称"
             required=""
           />
           <input
@@ -53,7 +53,7 @@
             required=""
             v-model="password"
           />
-          <button>注册</button>
+          <button @click.prevent="registEvent">注册</button>
         </form>
       </div>
     </div>
@@ -73,6 +73,7 @@ export default {
   },
   components: {},
   methods: {
+    // 登录事件
     async loginEvent() {
       //整理参数
       const { username, password } = this;
@@ -87,9 +88,36 @@ export default {
         Toast(meg);
         this.$router.push(goPath);
       } catch (error) {
+        //登录失败
         Toast(error.message);
         console.log(error.message);
       }
+    },
+    // 注册事件
+    async registEvent() {
+      //整理参数
+      const { username, password } = this;
+      let data = { username, password };
+      //在发登录请求
+      try {
+        //注册成功
+        let meg = await store.dispatch("user/register", data);
+        // localStorage.setItem("TOKEN", new Date().toISOString());
+        await Toast(meg);
+        // 清空账号和密码填写
+        this.clear();
+        //跳转到登录页面
+        // this.$router.go(0);
+      } catch (error) {
+        // 注册失败
+        Toast(error.message);
+        console.log(error.message);
+      }
+    },
+    //清空登录时候的账号名和密码
+    clear() {
+      this.username = "";
+      this.password = "";
     },
   },
 };

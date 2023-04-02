@@ -9,3 +9,5 @@ export const test02 = (url, params) => {
 export const reqUserInfo = () => requests({ url: `xxx`, method: "get" });
 export const requestLogin = (data) =>
   requests("/portal/userMember/login", "post", data);
+export const requestRegister = (data) =>
+  requests("/portal/userMember/register", "post", data);

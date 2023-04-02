@@ -1,4 +1,4 @@
-import { reqUserInfo, requestLogin } from "@/server/apis.js";
+import { reqUserInfo, requestLogin, requestRegister } from "@/server/apis.js";
 
 // state
 const state = {
@@ -47,7 +47,7 @@ const actions = {
       return Promise.reject();
     }
   },
-  //登录的接口
+  //登录的action逻辑
   async login(context, params) {
     let result = await requestLogin(params);
     let { data } = result;
@@ -60,6 +60,26 @@ const actions = {
       //以后开发的时候:经常的登录的成功获取token【持久化存储】
       localStorage.setItem("TOKEN", userInformation.token);
       localStorage.setItem("nickName", userInformation.nickname);
+      return Promise.resolve(data.message);
+    } else {
+      return Promise.reject(new Error(data.message));
+    }
+  },
+  //注册的action逻辑
+  async register(context, params) {
+    let result = await requestRegister(params);
+    console.log("😜🏀[ result ]-71", result);
+
+    let { data } = result;
+    // let userInformation = data.data;
+    console.log("data", data);
+    console.log("result===>", result);
+    if (data.status == 200) {
+      // context.commit("SET_TOKEN", userInformation.token);
+      // context.commit("SET_USERINFO", userInformation.nickname);
+      // //以后开发的时候:经常的登录的成功获取token【持久化存储】
+      // localStorage.setItem("TOKEN", userInformation.token);
+      // localStorage.setItem("nickName", userInformation.nickname);
       return Promise.resolve(data.message);
     } else {
       return Promise.reject(new Error(data.message));

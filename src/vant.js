@@ -9,6 +9,8 @@ import {
   Lazyload,
   Grid,
   GridItem,
+  Image as VanImage,
+  Loading
 } from "vant";
 
 Vue.use(Tabbar);
@@ -19,3 +21,5 @@ Vue.use(SwipeItem);
 Vue.use(Lazyload);
 Vue.use(Grid);
 Vue.use(GridItem);
+Vue.use(VanImage);
+Vue.use(Loading);

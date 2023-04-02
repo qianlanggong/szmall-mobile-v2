@@ -2,19 +2,43 @@
 <template>
   <!-- loading组件 -->
   <div>
-    <div class="loadingspinner">
-      <div id="square1"></div>
-      <div id="square2"></div>
-      <div id="square3"></div>
-      <div id="square4"></div>
-      <div id="square5"></div>
+    <div class="loader" v-if="show">
+      <div class="loadingspinner">
+        <div id="square1"></div>
+        <div id="square2"></div>
+        <div id="square3"></div>
+        <div id="square4"></div>
+        <div id="square5"></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name: "loadingVue",
+  data() {
+    return { show: true };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.show = false;
+    }, 800);
+  },
+};
 </script>
 <style scoped>
+.loader {
+  margin: auto;
+  float: left;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 400;
+}
 .loadingspinner {
   --square: 26px;
   --offset: 30px;

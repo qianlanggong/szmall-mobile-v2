@@ -28,6 +28,7 @@ export default {
 </script>
 <style scoped>
 .loader {
+  background-size: 100%;
   margin: auto;
   float: left;
   justify-content: center;

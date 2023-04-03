@@ -41,7 +41,6 @@ export default {
     return {};
   },
   mounted() {
-    console.log("[ props.title ] >", this.productList);
   },
   filters: {
     getPretext(val) {

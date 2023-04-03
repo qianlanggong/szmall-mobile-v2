@@ -10,7 +10,9 @@ import {
   Grid,
   GridItem,
   Image as VanImage,
-  Loading
+  Loading,
+  Tab,
+  Tabs,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -23,3 +25,5 @@ Vue.use(Grid);
 Vue.use(GridItem);
 Vue.use(VanImage);
 Vue.use(Loading);
+Vue.use(Tab);
+Vue.use(Tabs);

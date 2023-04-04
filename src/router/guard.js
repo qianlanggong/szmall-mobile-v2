@@ -1,5 +1,6 @@
 //引入仓库
 import store from "@/store";
+import { TOKEN, NICKNAME } from "@/store/enum/user";
 //配置全局路由守卫
 //参数路由器 router
 export const createRouterGuards = (router) => {
@@ -10,12 +11,13 @@ export const createRouterGuards = (router) => {
     //next:放行函数!!!!!!
     //用户是否登录:取决于仓库里面是否有token！！！
     //token
-    let hasToken = store.state.user.token;
+    store.dispatch('user/checkToken')
+    let hasToken = store.state.user[TOKEN];
     //用户信息
-    let hasNickName = store.state.user.nickName;
+    let hasNickName = store.state.user[NICKNAME];
     //   如果没有token,跳转到登录页面
     if (hasToken) {
-      next()
+      next();
       //用户登录了,不能去login
       if (to.path == "/login") {
         next("/home");

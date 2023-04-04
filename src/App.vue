@@ -11,7 +11,6 @@
 <script>
 import store from "./store";
 import footerVue from "@/common/footer.vue";
-
 export default {
   name: "App",
   data() {
@@ -24,7 +23,6 @@ export default {
   mounted() {
     store.commit("user/myMutation"); //mutation
     store.dispatch("user/myAction"); //action
-    // localStorage.setItem("TOKEN", new Date().toISOString());
   },
 };
 </script>

@@ -1,14 +1,15 @@
 import { reqUserInfo, requestLogin, requestRegister } from "@/server/apis.js";
-
+import { storage } from "@/utils";
+import { CODE, TOKEN, NICKNAME, TIMEOUT } from "../enum/user";
 // state
 const state = {
   name: "我是user模块",
   //验证码
-  code: "",
+  [CODE]: "",
   //身份标识符很重要【存储在vuex】
-  token: localStorage.getItem("TOKEN"),
+  [TOKEN]: localStorage.getItem([TOKEN]),
   //用户名
-  nickName: localStorage.getItem("nickName"),
+  [NICKNAME]: localStorage.getItem([NICKNAME]),
 };
 // mutations
 const mutations = {
@@ -16,18 +17,18 @@ const mutations = {
     console.log("user模块的 myMutation方法被触发了");
   },
   GET_CODE(state, code) {
-    state.code = code;
+    state[CODE] = code;
   },
   SET_TOKEN(state, token) {
-    state.token = token;
+    state[TOKEN] = token;
   },
   SET_USERINFO(state, nickName) {
-    state.nickName = nickName;
+    state[NICKNAME] = nickName;
   },
   CLEAR(state) {
     //清除仓库相关用户信息
-    state.token = "";
-    state.nickName = "";
+    state[TOKEN] = "";
+    state[NICKNAME] = "";
     //本地存储令牌清空
     localStorage.removeItem("TOKEN");
   },
@@ -47,19 +48,38 @@ const actions = {
       return Promise.reject();
     }
   },
+  //检验token是否还有效
+  checkToken(context) {
+    const a = storage.get("TOKEN");
+    if (!a.value) {
+      context.commit("CLEAR");
+    }
+  },
   //登录的action逻辑
   async login(context, params) {
     let result = await requestLogin(params);
     let { data } = result;
     let userInformation = data.data;
+    console.log("😜🏀[ userInformation ]-63", userInformation);
     console.log("data", data);
     console.log("result===>", result);
     if (data.status == 200) {
       context.commit("SET_TOKEN", userInformation.token);
       context.commit("SET_USERINFO", userInformation.nickname);
       //以后开发的时候:经常的登录的成功获取token【持久化存储】
-      localStorage.setItem("TOKEN", userInformation.token);
-      localStorage.setItem("nickName", userInformation.nickname);
+      // localStorage.setItem("TOKEN", userInformation.token);
+      // localStorage.setItem("nickName", userInformation.nickname);
+      // 存储token并且设置期限
+      storage.set(
+        "TOKEN",
+        userInformation.token,
+        new Date().getTime() + [TIMEOUT]
+      );
+      storage.set(
+        "NICKNAME",
+        userInformation.nickname,
+        new Date().getTime() + [TIMEOUT]
+      );
       return Promise.resolve(data.message);
     } else {
       return Promise.reject(new Error(data.message));

@@ -30,9 +30,9 @@ export class Storage {
       }
     } else {
       //否则key值无效
-      console.warn("key值无效");
+      console.warn(`${key}值无效`);
       return {
-        message: `key值无效`,
+        message: `${key}值无效`,
         value: null,
       };
     }

@@ -13,6 +13,8 @@ import {
   Loading,
   Tab,
   Tabs,
+  Sidebar,
+  SidebarItem,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -27,3 +29,5 @@ Vue.use(VanImage);
 Vue.use(Loading);
 Vue.use(Tab);
 Vue.use(Tabs);
+Vue.use(Sidebar);
+Vue.use(SidebarItem);

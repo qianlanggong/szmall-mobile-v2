@@ -15,3 +15,6 @@ export const requestRegister = (data) =>
   requests("/portal/userMember/register", "post", data);
 // 请求商品数据的接口
 export const requestProductList = () => get("/portal/home/content");
+// 请求分类数据的接口
+export const requestCategoryList = () =>
+  get("/portal/psmProduct/categoryTreeList");

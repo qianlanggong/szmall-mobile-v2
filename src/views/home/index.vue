@@ -3,20 +3,8 @@
   <div>
     <loading></loading>
     <!-- <div>我是home页面</div> -->
-    <!-- 搜索栏 -->
-    <van-search
-      v-model="searchVal"
-      show-action
-      placeholder="请输入搜索关键词"
-      @search="onSearch"
-    >
-      <template #action>
-        <div @click="onSearch">搜索</div>
-      </template>
-    </van-search>
-    <!-- 搜索栏 -->
     <!-- 可垂直滚动区域 -->
-    <div class="scroll" ref="scrollContent">
+    <div class="scroll">
       <!-- swipe轮播图 -->
       <van-swipe
         class="my-swipe"
@@ -28,10 +16,7 @@
         height="195"
       >
         <van-swipe-item v-for="item in advertiseList" :key="item.id">
-          <van-image
-            :src="item.pic"
-            fit="cover"
-          ></van-image
+          <van-image :src="item.pic" fit="cover"></van-image
         ></van-swipe-item>
       </van-swipe>
       <!-- swipe轮播图 -->
@@ -44,82 +29,41 @@
       </van-grid>
       <!-- 图标功能栏 -->
       <!-- 商品列表 -->
-      <productsList title="精品推荐"></productsList>
       <productsList
         title="精品推荐"
-        :productList="advertiseList"
+        :productList="newProductList"
       ></productsList>
+      <van-tabs scrollspy sticky>
+        <van-tab v-for="index in 8" :title="'选项 ' + index" :key="index">
+          内容 {{ index }}
+        </van-tab>
+      </van-tabs>
       <!-- 商品列表 -->
     </div>
     <!-- 可垂直滚动区域 -->
   </div>
 </template>
 <script>
-// 引入弹窗提示
-import { Toast } from "vant";
-import { requestProductList } from "@/server/apis.js";
+// 引入等待动画
 import loading from "@/common/loading.vue";
+// 引入产品列表提示
+import { requestProductList } from "@/server/apis.js";
 import productsList from "./components/productsList.vue";
-//引入搜索栏的高度，和底部导航栏的高度
-import { searchHEIGHT, tabbarHEIGHT } from "./enum";
 export default {
   name: "homeVue",
   data() {
     return {
-      // 搜索内容值
-      searchVal: "",
       advertiseList: "",
       newProductList: "",
-      // 视口高度
-      viewHight: document.documentElement.clientHeight,
     };
   },
-  computed: {
-    // 计算内容区的高度
-    contentHight() {
-      return this.viewHight - tabbarHEIGHT - searchHEIGHT;
-    },
-  },
-  watch: {
-    //监视视口高度
-    viewHight: {
-      handler(nVal) {
-        this.setContentHeight(nVal);
-      },
-    },
-  },
+  computed: {},
   // 注册组件
   components: { productsList, loading },
   methods: {
-    //搜索栏搜索事件
-    onSearch() {
-      Toast(this.searchVal);
-    },
     // 轮播图事件
     clickSwipe(e) {
       console.log(e);
-    },
-    // clientWidth 处理兼容性
-    getWindowClient() {
-      return {
-        width:
-          window.innerWidth ||
-          document.documentElement.clientWidth ||
-          document.body.clientWidth,
-        height:
-          window.innerHeight ||
-          document.documentElement.clientHeight ||
-          document.body.clientHeight,
-      };
-    },
-    // scrollTop兼容性处理
-    getScrollTop() {
-      return window.pageYOffset || document.documentElement.scrollTop;
-    },
-    // 重新设置内容区高度
-    setContentHeight(value) {
-      this.$refs.scrollContent.style.height =
-        value - tabbarHEIGHT - searchHEIGHT + "px";
     },
   },
   async mounted() {
@@ -132,11 +76,6 @@ export default {
       this.advertiseList = advertiseList;
       this.newProductList = newProductList;
     });
-    //视口发生变化的钩子
-    this.setContentHeight(this.viewHight);
-    window.onresize = () => {
-      this.viewHight = this.getWindowClient().height;
-    };
   },
 };
 </script>
@@ -150,6 +89,6 @@ export default {
 }
 .scroll {
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 </style>

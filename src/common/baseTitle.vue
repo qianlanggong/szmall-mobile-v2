@@ -27,7 +27,7 @@ export default {
 </script>
 <style scoped>
 .title {
-  height: 40px;
+  height: 54px;
   line-height: 40px;
   background: #fff;
   text-align: center;

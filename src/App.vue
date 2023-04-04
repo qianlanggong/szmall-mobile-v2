@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <!-- 搜索栏 -->
+    <searchTab></searchTab>
+    <!-- 搜索栏 -->
+    <contentView>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </contentView>
     <!-- 底部标签栏 -->
     <footerVue></footerVue>
   </div>
@@ -11,6 +16,8 @@
 <script>
 import store from "./store";
 import footerVue from "@/common/footer.vue";
+import contentView from "./common/contentView.vue";
+import searchTab from "@/common/searchTab.vue";
 export default {
   name: "App",
   data() {
@@ -19,7 +26,7 @@ export default {
       token: store.state.user.TOKEN,
     };
   },
-  components: { footerVue },
+  components: { footerVue, contentView, searchTab },
   mounted() {
     store.commit("user/myMutation"); //mutation
     store.dispatch("user/myAction"); //action

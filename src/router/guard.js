@@ -10,8 +10,9 @@ export const createRouterGuards = (router) => {
     //from:从那个路由而来的信息
     //next:放行函数!!!!!!
     //用户是否登录:取决于仓库里面是否有token！！！
+    // 路由切换验证token是否过期
+    store.dispatch("user/checkToken");
     //token
-    store.dispatch('user/checkToken')
     let hasToken = store.state.user[TOKEN];
     //用户信息
     let hasNickName = store.state.user[NICKNAME];

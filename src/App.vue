@@ -16,7 +16,9 @@
 <script>
 import store from "./store";
 import footerVue from "@/common/footer.vue";
+// 引入内容区组件
 import contentView from "./common/contentView.vue";
+// 引入搜索栏组件
 import searchTab from "@/common/searchTab.vue";
 export default {
   name: "App",

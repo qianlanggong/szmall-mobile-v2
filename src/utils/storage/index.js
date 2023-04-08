@@ -16,7 +16,7 @@ export class Storage {
       const now = new Date().getTime();
       //有效并且是数字类型 并且过期了 进行删除和提示
       if (typeof obj[expire] == "number" && obj[expire] < now) {
-        localStorage.removeItem(key);
+        this.remove(key);
         return {
           message: `您的${key}已过期`,
           value: null,

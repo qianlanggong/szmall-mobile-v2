@@ -30,7 +30,7 @@ const mutations = {
     state[TOKEN] = "";
     state[NICKNAME] = "";
     //本地存储令牌清空
-    localStorage.removeItem("TOKEN");
+    localStorage.removeItem[TOKEN];
   },
 };
 // actions
@@ -50,10 +50,17 @@ const actions = {
   },
   //检验token是否还有效
   checkToken(context) {
-    const a = storage.get("TOKEN");
+    const a = storage.get([TOKEN]);
+    console.log("[ a ] >", a);
     if (!a.value) {
       context.commit("CLEAR");
     }
+    // storage.set("a", 123, new Date().getTime() + 5000);
+
+    // setInterval(() => {
+    //   const a = storage.get("a");
+    //   console.log(a);
+    // }, 500);
   },
   //登录的action逻辑
   async login(context, params) {

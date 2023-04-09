@@ -50,13 +50,12 @@ const actions = {
   },
   //检验token是否还有效
   checkToken(context) {
-    const a = storage.get([TOKEN]);
-    console.log("[ a ] >", a);
-    if (!a.value) {
+    const token = storage.get([TOKEN]);
+    // console.log("[ a ] >", a);
+    if (!token.value) {
       context.commit("CLEAR");
     }
     // storage.set("a", 123, new Date().getTime() + 5000);
-
     // setInterval(() => {
     //   const a = storage.get("a");
     //   console.log(a);
@@ -80,12 +79,12 @@ const actions = {
       storage.set(
         "TOKEN",
         userInformation.token,
-        new Date().getTime() + [TIMEOUT]
+        new Date().getTime() + +[TIMEOUT]
       );
       storage.set(
         "NICKNAME",
         userInformation.nickname,
-        new Date().getTime() + [TIMEOUT]
+        new Date().getTime() + +[TIMEOUT]
       );
       return Promise.resolve(data.message);
     } else {

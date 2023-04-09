@@ -15,6 +15,15 @@ import {
   Tabs,
   Sidebar,
   SidebarItem,
+  Icon,
+  NavBar,
+  DropdownMenu,
+  DropdownItem,
+  Row,
+  Cell,
+  CellGroup,
+  Stepper,
+  Button,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -31,3 +40,12 @@ Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(Sidebar);
 Vue.use(SidebarItem);
+Vue.use(Icon);
+Vue.use(NavBar);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Row);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(Stepper);
+Vue.use(Button);

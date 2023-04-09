@@ -12,11 +12,11 @@
         indicator-color="white"
         @click="clickSwipe(event)"
         :stop-propagation="false"
-        width="392"
+        width="100%"
         height="195"
       >
         <van-swipe-item v-for="item in advertiseList" :key="item.id">
-          <van-image :src="item.pic" fit="cover"></van-image
+          <van-image :src="item.pic" fit="cover" width="100%"></van-image
         ></van-swipe-item>
       </van-swipe>
       <!-- swipe轮播图 -->
@@ -49,12 +49,15 @@ import loading from "@/common/loading.vue";
 // 引入产品列表提示
 import { requestProductList } from "@/server/apis.js";
 import productsList from "./components/productsList.vue";
+import { Toast } from "vant";
 export default {
   name: "homeVue",
   data() {
     return {
       advertiseList: "",
       newProductList: "",
+      // 搜索内容值
+      searchVal: "",
     };
   },
   computed: {},
@@ -64,6 +67,10 @@ export default {
     // 轮播图事件
     clickSwipe(e) {
       console.log(e);
+    },
+    //搜索栏搜索事件
+    onSearch() {
+      Toast(this.searchVal);
     },
   },
   async mounted() {

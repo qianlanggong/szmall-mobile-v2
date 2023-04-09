@@ -98,7 +98,7 @@ export default {
       //整理参数
       const { username, password } = this;
       let data = { username, password };
-      //在发登录请求
+      //再发注册请求
       try {
         //注册成功
         let meg = await store.dispatch("user/register", data);

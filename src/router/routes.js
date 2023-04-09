@@ -45,6 +45,14 @@ const routes = [
       title: "购物车",
     },
   },
+  {
+    path: "/productList",
+    name: "productList",
+    component: () => import("@/views/productList"),
+    meta: {
+      title: "商品列表",
+    },
+  },
 ];
 
 export default routes;

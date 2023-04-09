@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <baseTitle title="分类"></baseTitle>
     <!-- <div>我是category页面</div> -->
     <div class="main" ref="category">
       <van-sidebar v-model="classifyKey" class="sidebar">
@@ -23,6 +22,7 @@
             :key="index"
             :icon="item.icon"
             :text="item.name"
+            @click="clickCategory"
           >
           </van-grid-item>
         </van-grid>
@@ -31,7 +31,6 @@
   </div>
 </template>
 <script>
-import baseTitle from "@/common/baseTitle.vue";
 // 引入数据
 import { requestCategoryList } from "@/server/apis.js";
 
@@ -53,6 +52,10 @@ export default {
       // 根据i进行二级菜单筛选
       this.category = this.classify[i].children;
     },
+    clickCategory() {
+      console.log("点击了");
+      this.$router.push("productList");
+    },
   },
   async mounted() {
     try {
@@ -69,7 +72,6 @@ export default {
       console.log("[ error ] >", error);
     }
   },
-  components: { baseTitle },
 };
 </script>
 <style scoped>

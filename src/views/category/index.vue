@@ -53,8 +53,7 @@ export default {
       this.category = this.classify[i].children;
     },
     clickCategory() {
-      console.log("点击了");
-      this.$router.push("productList");
+      console.log("点击了clickCategory");
     },
   },
   async mounted() {

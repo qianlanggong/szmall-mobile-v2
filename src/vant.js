@@ -24,6 +24,7 @@ import {
   CellGroup,
   Stepper,
   Button,
+  Empty,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -49,3 +50,4 @@ Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Stepper);
 Vue.use(Button);
+Vue.use(Empty);

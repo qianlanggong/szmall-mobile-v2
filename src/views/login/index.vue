@@ -188,7 +188,7 @@ label {
   transition: 0.5s ease-in-out;
 }
 .input {
-  width: 100%;
+  /* width: 100%; */
   height: 40px;
   background: #e0dede;
   padding: 10px;

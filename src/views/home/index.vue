@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <loading></loading>
+    <loading v-if="loading"></loading>
     <!-- <div>我是home页面</div> -->
     <!-- 可垂直滚动区域 -->
     <div class="scroll">
@@ -22,7 +22,7 @@
       <!-- swipe轮播图 -->
       <!-- 图标功能栏 -->
       <van-grid>
-        <van-grid-item icon="shop" text="全部商品" />
+        <van-grid-item icon="shop" text="全部商品" @click="toProductList" />
         <van-grid-item icon="coupon" text="优惠券" />
         <van-grid-item icon="point-gift" text="积分商品" />
         <van-grid-item icon="gift-card" text="积分签到" />
@@ -47,7 +47,7 @@
 // 引入等待动画
 import loading from "@/common/loading.vue";
 // 引入产品列表提示
-import { requestProductList } from "@/server/apis.js";
+import { requestHomeProductList } from "@/server/apis.js";
 import productsList from "./components/productsList.vue";
 import { Toast } from "vant";
 export default {
@@ -58,6 +58,8 @@ export default {
       newProductList: "",
       // 搜索内容值
       searchVal: "",
+      //是否加载中
+      loading: true,
     };
   },
   computed: {},
@@ -72,16 +74,20 @@ export default {
     onSearch() {
       Toast(this.searchVal);
     },
+    // 跳转到商品列表页面 `toProductList()` 是当用户点击“全部商品”网格项时调用的方法。显示所有可用产品的列表
+    toProductList() {
+      this.$router.push("productList");
+    },
   },
   async mounted() {
     //请求商品列表
-    await requestProductList().then((res) => {
-      // console.log("😜🏀[ res ]-73", res.data);
+    await requestHomeProductList().then((res) => {
       const { advertiseList, newProductList } = res.data.data;
       console.log("😜🏀[ newProductList ]-78", newProductList);
       console.log("😜🏀[ advertiseList ]-78", advertiseList);
       this.advertiseList = advertiseList;
       this.newProductList = newProductList;
+      this.loading = false;
     });
   },
 };

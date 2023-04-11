@@ -83,6 +83,8 @@ export default {
         //登录成功
         let meg = await store.dispatch("user/login", data);
         let goPath = this.$route.query.redirect || "/home";
+        // 清空账号和密码填写
+        this.clear();
         //跳转到被拦截页面
         // localStorage.setItem("TOKEN", new Date().toISOString());
         Toast(meg);

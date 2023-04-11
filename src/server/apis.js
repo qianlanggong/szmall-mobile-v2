@@ -13,6 +13,8 @@ export const requestLogin = (data) =>
 // 请求注册的接口
 export const requestRegister = (data) =>
   requests("/portal/userMember/register", "post", data);
+// 请求退出用户的接口
+export const requestExitLogin = (id) => post("/portal/userMember/loginOut", id);
 // 请求首页商品数据的接口
 export const requestHomeProductList = () => get("/portal/home/content");
 // 请求分类数据的接口

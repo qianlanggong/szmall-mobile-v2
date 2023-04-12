@@ -1,9 +1,15 @@
-import { requestAllProductList } from "@/server";
-import { requestMoreProducts } from "@/server";
+import {
+  requestAllProductList,
+  requestMoreProducts,
+  requestAddreassList,
+} from "@/server";
 // state
 const state = {
   name: "我是goods模块",
+  // 商品列表
   productList: [],
+  // 地址列表
+  addressList: [],
 };
 // mutations
 const mutations = {
@@ -13,6 +19,9 @@ const mutations = {
   getMoreProcuts(state, val) {
     state.productList.push(...val);
     // console.log(state, val);
+  },
+  getAddressList(state, val) {
+    state.addressList = val;
   },
 };
 // getters
@@ -47,6 +56,27 @@ const actions = {
     if (status == 200) {
       if (!data.list.length > 0) message = "已加载全部";
       commit("getMoreProcuts", data.list);
+      return Promise.resolve(message);
+    } else {
+      return Promise.reject(new Error(message));
+    }
+  },
+  // 请求用户地址栏列表
+  async getAddressList({ commit }, token) {
+    let headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      token: token,
+    };
+    let result = await requestAddreassList(headers);
+    console.log("😜🏀[ result ]-70", result);
+    let {
+      data: { status },
+      data: { message },
+      data: { data },
+    } = result;
+    if (status == 200) {
+      commit("getAddressList", data);
       return Promise.resolve(message);
     } else {
       return Promise.reject(new Error(message));

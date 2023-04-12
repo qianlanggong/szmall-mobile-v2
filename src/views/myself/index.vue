@@ -40,6 +40,7 @@
     <div class="logout-button">
       <van-button type="primary" @click="logout"> 退出登录 </van-button>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -56,15 +57,9 @@ export default {
         { icon: "comment-o", title: "待评价" },
         { icon: "refund-o", title: "退款/售后" },
       ],
-      avatar:
-        store.state.user.USERINFO.icon ??
-        "https://avatars.githubusercontent.com/u/26635812?v=4",
-      nickname: store.state.user.USERINFO.nickname ?? "heibi",
-      phone:
-        store.state.user.USERINFO.phone.replace(
-          /(\d{3})(\d{5})(\d{3})/g,
-          "$1*****$3"
-        ) ?? "138****8888",
+      avatar: null,
+      nickname: null,
+      phone: null,
       order: "orders-o",
       address: "location-o",
     };
@@ -72,8 +67,6 @@ export default {
   methods: {
     goToFavorite() {
       // 跳转到收藏页面
-      console.log(store.state.user.USERINFO);
-      this.avatar = store.state.user.USERINFO.icon;
     },
     goToFootprint() {
       // 跳转到足迹页面
@@ -98,6 +91,7 @@ export default {
     },
     goToAddress() {
       // 跳转到收货地址页面
+      this.$router.push({ name: "addressList" });
     },
     async logout() {
       try {
@@ -115,6 +109,17 @@ export default {
     },
   },
   mounted() {},
+  created() {
+    this.nickname = store.state.user.USERINFO?.nickname ?? "heibi";
+    this.avatar =
+      store.state.user.USERINFO?.icon ??
+      "https://avatars.githubusercontent.com/u/26635812?v=4";
+    this.phone =
+      store.state.user.USERINFO?.phone?.replace(
+        /(\d{3})(\d{5})(\d{3})/g,
+        "$1*****$3"
+      ) ?? "138****8888";
+  },
 };
 </script>
 <style scoped>

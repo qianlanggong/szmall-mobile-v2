@@ -36,6 +36,24 @@ const routes = [
     meta: {
       title: "个人",
     },
+    children: [
+      {
+        path: "addressList",
+        name: "addressList",
+        component: () => import("@/views/myself/childPages/addressList.vue"),
+        meta: {
+          title: "我的地址列表",
+        },
+      },
+      {
+        path: "addressEdit",
+        name: "addressEdit",
+        component: () => import("@/views/myself/childPages/addressEdit.vue"),
+        meta: {
+          title: "地址编辑",
+        },
+      },
+    ],
   },
   {
     path: "/shopCart",

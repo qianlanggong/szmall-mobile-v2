@@ -26,6 +26,8 @@ import {
   Button,
   Empty,
   Card,
+  AddressList,
+  AddressEdit,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -53,3 +55,5 @@ Vue.use(Stepper);
 Vue.use(Button);
 Vue.use(Empty);
 Vue.use(Card);
+Vue.use(AddressList);
+Vue.use(AddressEdit);

@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="productList">
     <!-- 商品列表 -->
-    <div>
+    <div v-if="!title === '商品列表'">
       <div class="title">{{ title }}</div>
     </div>
-    <van-grid :column-num="2">
+    <van-grid :column-num="2" :gutter="10">
       <van-grid-item
         v-for="item in productList"
         :key="item.id"
         icon="photo-o"
         text="文字123"
+        @click="clickItem(item.id)"
       >
         <van-image :src="item.pic" width="100" height="100" lazy-load>
           <template v-slot:loading>
@@ -17,8 +18,10 @@
           </template>
         </van-image>
         <div class="van-ellipsis">{{ item.name | getPretext }}</div>
+        <div class="price">{{ item.price | embellishPrice }}</div>
       </van-grid-item>
     </van-grid>
+
     <!-- 商品列表 -->
   </div>
 </template>
@@ -28,7 +31,7 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
       default: "商品列表",
     },
     productList: {
@@ -40,13 +43,24 @@ export default {
   data() {
     return {};
   },
-  mounted() {
+  methods: {
+    clickItem(id) {
+      this.$emit("clickItem", id);
+    },
   },
+  mounted() {},
   filters: {
     getPretext(val) {
       return val.slice(0, 8) + "...";
     },
+    embellishPrice(val) {
+      return `￥${val.toFixed(2)}`;
+    },
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.price {
+  color: #ffd942;
+}
+</style>

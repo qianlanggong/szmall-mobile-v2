@@ -35,3 +35,5 @@ export const requestAddreassList = (headers, data) =>
 // 增加用户的收货地址
 export const requestAddAddress = (headers, data) =>
   requestWithToenAJSON("/portal/member/address/add", "POST", headers, data);
+export const requestProductDetail = (id) =>
+  get(`/portal/psmProduct/detail/${id}`);

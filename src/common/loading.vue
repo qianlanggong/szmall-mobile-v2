@@ -28,6 +28,9 @@ export default {
 </script>
 <style scoped>
 .loader {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
   background-size: 100%;
   margin: auto;
   float: left;

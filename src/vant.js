@@ -19,7 +19,6 @@ import {
   NavBar,
   DropdownMenu,
   DropdownItem,
-  Row,
   Cell,
   CellGroup,
   Stepper,
@@ -28,6 +27,13 @@ import {
   Card,
   AddressList,
   AddressEdit,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
+  Tag,
+  Col,
+  Row,
+  Sku,
 } from "vant";
 
 Vue.use(Tabbar);
@@ -48,7 +54,6 @@ Vue.use(Icon);
 Vue.use(NavBar);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
-Vue.use(Row);
 Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Stepper);
@@ -57,3 +62,10 @@ Vue.use(Empty);
 Vue.use(Card);
 Vue.use(AddressList);
 Vue.use(AddressEdit);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
+Vue.use(Tag);
+Vue.use(Col);
+Vue.use(Row);
+Vue.use(Sku);

@@ -1,5 +1,5 @@
 import {
-  reqUserInfo,
+  // reqUserInfo,
   requestLogin,
   requestRegister,
   requestExitLogin,
@@ -51,15 +51,15 @@ const actions = {
     console.log("user模块 action的 myAction方法被触发了");
   },
   //获取用户信息
-  async getUserInfo({ commit }) {
-    let result = await reqUserInfo();
-    if (result.code == 200) {
-      commit("SET_NICKNAME", result.data.nickName);
-      return "ok";
-    } else {
-      return Promise.reject();
-    }
-  },
+  // async getUserInfo({ commit }) {
+  //   let result = await reqUserInfo();
+  //   if (result.code == 200) {
+  //     commit("SET_NICKNAME", result.data.nickName);
+  //     return "ok";
+  //   } else {
+  //     return Promise.reject();
+  //   }
+  // },
   //检验token是否还有效
   /* `checkToken` 是一个函数，用于检查存储在本地存储中的令牌是否仍然有效。它使用 storage.get
   函数检索令牌并检查它是否有值。如果令牌无效，它会调用“CLEAR”突变以从状态和本地存储中清除用户信息。 */

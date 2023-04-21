@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="productList">
     <!-- <baseTitle title="商品列表" :back="true" @goBack="goBack"></baseTitle> -->
     <loading v-if="loading"></loading>
     <van-nav-bar
@@ -13,134 +13,111 @@
         <van-icon name="search" size="18" />
       </template>
     </van-nav-bar>
-    <!-- 商品列表 -->
-    <div class="goods-list">
-      <van-dropdown-menu :z-index="99">
-        <van-dropdown-item
-          v-model="activeFilter"
-          :title="filterTitles.all"
-          :options="allOptions"
-        ></van-dropdown-item>
-        <van-dropdown-item
-          v-model="activeFilter"
-          :title="filterTitles.price"
-          :options="priceOptions"
-        ></van-dropdown-item>
-        <van-dropdown-item
-          v-model="activeFilter"
-          :title="filterTitles.new"
-          :options="newOptions"
-        ></van-dropdown-item>
-      </van-dropdown-menu>
-      <div class="goods-container">
-        <van-row gutter="10">
-          <van-col v-for="item in filteredGoods" :key="item.id" :span="12">
-            <div class="goods-item">
-              <div class="goods-image">
-                <img :src="item.pic" alt="" />
-              </div>
-              <div class="goods-info">
-                <div class="goods-name">{{ item.name }}</div>
-                <div class="goods-price">￥{{ item.price.toFixed(2) }}</div>
-              </div>
-            </div>
-          </van-col>
-        </van-row>
-        <van-row type="flex" justify="center" style="margin-top: 20px">
-          <van-col>
-            <van-button plain round color="#333" @click="getMore"
-              >加载更多</van-button
-            >
-          </van-col>
-        </van-row>
-        <van-empty v-if="filteredGoods.length === 0" description="暂无商品" />
-      </div>
+    <!-- start商品筛选 -->
+    <div class="selectType" ref="selectType" @click="selectType">
+      <van-button
+        color="#333"
+        :class="{ selected: currentSelector == '综合' }"
+        plain
+        data-name="综合"
+        >综合</van-button
+      >
+      <van-button
+        color="#333"
+        plain
+        :class="{ selected: currentSelector == '价格' }"
+        data-name="价格"
+        ref="priceButton"
+        >价格
+        <van-icon name="arrow-up" v-show="sortWay == 3" />
+        <van-icon name="arrow-down" v-show="sortWay == 4" />
+      </van-button>
+      <van-button
+        color="#333"
+        plain
+        :class="{ selected: currentSelector == '新品' }"
+        data-name="新品"
+        >新品</van-button
+      >
     </div>
-    <!-- 商品列表 -->
+    <!-- end商品筛选 -->
+    <!-- start商品列表 -->
+    <!-- <div class="products">
+      <van-grid :border="false" :column-num="2" :gutter="20">
+        <van-grid-item v-for="item in products" :key="item.id">
+          <van-image fit="cover" lazy-load :src="item.pic">
+            <template v-slot:loading>
+              <van-loading type="spinner" size="20" />
+            </template>
+            <template v-slot:error>加载失败</template>
+          </van-image>
+          <div class="title">{{ item.subTitle }}</div>
+          <div class="price">{{ item.price }}</div>
+        </van-grid-item>
+      </van-grid>
+    </div> -->
+    <productsList :productList="products" @clickItem="clickItem"></productsList>
+    <!-- start点击查看更多 -->
+    <van-row type="flex" justify="center">
+      <van-button style="" color="#333" round plain @click="getMore">
+        加载更多
+      </van-button>
+    </van-row>
+    <!-- end点击查看更多 -->
+    <router-view></router-view>
+    <!-- end商品列表 -->
   </div>
 </template>
 <script>
 import loading from "@/common/loading.vue";
+import productsList from "@/common/productsList.vue";
+
 import store from "@/store";
 import { Toast } from "vant";
-import { Col } from "vant";
 export default {
   name: "productList",
   components: {
-    "van-col": Col,
     loading,
+    productsList,
   },
   data() {
     return {
+      // 这些是在 Vue 组件的数据对象中定义的属性。
+      currentSelector: "综合",
       loading: true,
-      filterTitles: {
-        all: "综合",
-        price: "价格",
-        new: "新品",
-      },
-      allOptions: [
-        { text: "无", value: "null" },
-        { text: "综合", value: "all" },
-      ],
-      priceOptions: [
-        { text: "价格从低到高", value: "growth" },
-        { text: "价格从高到低", value: "slide" },
-      ],
-      newOptions: [
-        { text: "无", value: "null" },
-        { text: "新品", value: "new" },
-      ],
-      activeFilter: "all",
-      goods: [
-        {
-          id: 1,
-          name: "商品1111111111111111",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 50,
-          new: false,
-        },
-        {
-          id: 2,
-          name: "商品2",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 80,
-          new: true,
-        },
-        {
-          id: 3,
-          name: "商品3",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 20,
-          new: true,
-        },
-        {
-          id: 4,
-          name: "商品4",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 120,
-          new: false,
-        },
-        {
-          id: 5,
-          name: "商品5",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 60,
-          new: false,
-        },
-        {
-          id: 6,
-          name: "商品6",
-          image: "https://dummyimage.com/300x300/000/fff",
-          price: 90,
-          new: true,
-        },
-      ],
       pageNum: 1,
       pageSize: 10,
       sortWay: 0,
+      products: [],
     };
   },
   methods: {
+    async selectType(e) {
+      let button = e.target;
+      switch (button.dataset.name) {
+        case "综合":
+          this.sortWay = 0;
+          break;
+        case "价格":
+          this.sortWay = this.sortWay == 3 ? 4 : 3;
+          break;
+        case "新品":
+          this.sortWay = 1;
+          break;
+      }
+      if (
+        this.currentSelector === button.dataset.name &&
+        this.currentSelector !== "价格"
+      )
+        return;
+      this.loading = true;
+      this.products = [];
+      this.pageNum = 1;
+      this.currentSelector = button.dataset.name;
+      await this.getProductList();
+      this.loading = false;
+      this.goods = store.state.goods.productList;
+    },
     onClickLeft() {
       this.$router.go(-1);
     },
@@ -163,11 +140,11 @@ export default {
       try {
         //请求成功
         let meg = await store.dispatch("goods/getProducts", data);
+        this.products = store.state.goods.productList;
         Toast(meg);
       } catch (error) {
         //请求失败
         Toast(error.message);
-        console.log(error.message);
       }
     },
     // 获取更多数据
@@ -183,29 +160,15 @@ export default {
       } catch (error) {
         //请求失败
         Toast(error.message);
-        console.log(error.message);
       }
     },
-  },
-  computed: {
-    filteredGoods() {
-      let goods = this.goods.slice(); // 复制原数组，避免修改原数据
-      switch (this.activeFilter) {
-        case "all":
-          break; // 默认不需要排序和筛选
-        case "growth":
-          goods.sort((a, b) => a.price - b.price);
-          break;
-        case "slide":
-          goods.sort((a, b) => b.price - a.price);
-          break;
-        case "new":
-          goods = goods.filter((item) => item.newStatus);
-          break;
-      }
-      return goods;
+    async clickItem(id) {
+      this.$router.push({
+        path: `/productList/detail/${id}`,
+      });
     },
   },
+  computed: {},
   async mounted() {
     await this.getProductList();
     this.goods = store.state.goods.productList;
@@ -213,47 +176,34 @@ export default {
   },
 };
 </script>
-<style scoped>
-.goods-list {
-  padding: 10px;
-}
-.goods-container {
-  margin-top: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  overflow: hidden;
-}
-.goods-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-.goods-image {
-  width: 80px;
-  height: 80px;
-  margin-right: 10px;
-}
-.goods-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.goods-info {
-  flex: 1;
-}
-.goods-info .goods-name {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-.goods-info .goods-price {
-  font-size: 18px;
-  color: #f60;
-}
-.goods-info .goods-name {
-  width: 6.25rem;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+<style lang="less" scoped>
+.productList {
+  background-color: rgba(241, 241, 241, 0.492);
+  .selectType {
+    display: flex;
+    margin: 10px auto;
+    width: 90%;
+    justify-content: space-evenly;
+    background-color: #fff;
+    button {
+      width: 6.25rem;
+      border: none;
+    }
+    .selected {
+      color: red !important;
+    }
+  }
+  .products {
+    .title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100px;
+      text-align: center;
+    }
+    .price {
+      color: #ffd942;
+    }
+  }
 }
 </style>

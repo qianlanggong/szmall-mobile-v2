@@ -40,4 +40,8 @@ body,
   height: 100%;
   overflow: hidden;
 }
+/* .wscnph */
+img {
+  width: 100%;
+}
 </style>

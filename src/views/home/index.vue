@@ -33,11 +33,6 @@
         title="精品推荐"
         :productList="newProductList"
       ></productsList>
-      <van-tabs scrollspy sticky>
-        <van-tab v-for="index in 8" :title="'选项 ' + index" :key="index">
-          内容 {{ index }}
-        </van-tab>
-      </van-tabs>
       <!-- 商品列表 -->
     </div>
     <!-- 可垂直滚动区域 -->
@@ -48,7 +43,7 @@
 import loading from "@/common/loading.vue";
 // 引入产品列表提示
 import { requestHomeProductList } from "@/server/apis.js";
-import productsList from "./components/productsList.vue";
+import productsList from "@/common/productsList.vue";
 import { Toast } from "vant";
 export default {
   name: "homeVue",

@@ -70,6 +70,16 @@ const routes = [
     meta: {
       title: "商品列表",
     },
+    children: [
+      {
+        path: "detail/:id",
+        name: "productDetail",
+        component: () => import("@/common/productDetail"),
+        meta: {
+          title: "商品详情页",
+        },
+      },
+    ],
   },
 ];
 

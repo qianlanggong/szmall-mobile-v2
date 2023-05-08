@@ -13,7 +13,8 @@ export const requestLogin = (data) => post("/portal/userMember/login", data);
 export const requestRegister = (data) =>
   post("/portal/userMember/register", data);
 // 请求退出用户的接口
-export const requestExitLogin = (id) => post("/portal/userMember/loginOut", id);
+export const requestExitLogin = (headers, id) =>
+  requestWithToenAJSON("/portal/userMember/loginOut", "GET", headers, id);
 // 请求首页商品数据的接口
 export const requestHomeProductList = () => get("/portal/home/content");
 // 请求分类数据的接口
@@ -35,5 +36,12 @@ export const requestAddreassList = (headers, data) =>
 // 增加用户的收货地址
 export const requestAddAddress = (headers, data) =>
   requestWithToenAJSON("/portal/member/address/add", "POST", headers, data);
+//查看商品的详情页
 export const requestProductDetail = (id) =>
   get(`/portal/psmProduct/detail/${id}`);
+// 添加到个人购物车
+export const requestAddCardList = (headers, data) =>
+  requestWithToenAJSON("/portal/cart/add", "POST", headers, data);
+// 获取购物车商品列表
+export const requestCardList = (headers, id) =>
+  requestWithToenAJSON(`/portal/cart/list?memberId=${id}`, "GET", headers);

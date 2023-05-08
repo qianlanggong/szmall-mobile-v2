@@ -2,6 +2,7 @@ import {
   requestAllProductList,
   requestMoreProducts,
   requestAddreassList,
+  requestAddCardList,
 } from "@/server";
 // state
 const state = {
@@ -77,6 +78,27 @@ const actions = {
     } = result;
     if (status == 200) {
       commit("getAddressList", data);
+      return Promise.resolve(message);
+    } else {
+      return Promise.reject(new Error(message));
+    }
+  },
+  // 添加购物车
+  async AddCardList(store, comingData) {
+    let { token } = comingData;
+    delete comingData.token;
+    let headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      token: token,
+    };
+    let result = await requestAddCardList(headers, comingData);
+    let {
+      data: { status },
+      data: { message },
+      // data: { data },
+    } = result;
+    if (status == 200) {
       return Promise.resolve(message);
     } else {
       return Promise.reject(new Error(message));

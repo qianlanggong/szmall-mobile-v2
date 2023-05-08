@@ -30,10 +30,10 @@ const mutations = {
     state[NICKNAME] = nickName;
   },
   SET_USERID(state, userId) {
+    console.log("😜🏀[ userId ]-33", userId);
     state[USERID] = userId;
   },
   SET_USERINFO(state, val) {
-    console.log("[ val ] >", val);
     state[USERINFO] = val;
   },
   CLEAR(state) {
@@ -130,9 +130,14 @@ const actions = {
   //退出登录的业务
   /* 这是处理注销功能的异步操作。它有两个参数 - `commit` 和 `val`。 `val`参数是服务端需要销毁的token。 */
   async logout({ commit }, val) {
-    console.log("[ val ] >", val);
+    let headers = {
+      Authorization: `Bearer ${val.token}`,
+      "Content-Type": "application/json",
+      token: val.token,
+    };
+    console.log("[ val ] >", val.id);
     //发请求通知服务器销毁当前token【学生证】
-    let result = await requestExitLogin(val);
+    let result = await requestExitLogin(headers, val.id);
     console.log("😜🏀[ result ]-131", result);
     let {
       data: { message, status },

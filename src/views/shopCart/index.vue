@@ -12,8 +12,8 @@
         <van-cell
           v-for="(item, index) in cartList"
           :key="item.id"
-          :title="item.name"
-          :label="item.price + '元/' + item.unit"
+          :title="item.productName"
+          :label="item.price + '元/个'"
           :icon="item.image"
           is-link
         >
@@ -84,7 +84,18 @@ export default {
       // TODO: 处理结算逻辑
     },
   },
-  mounted() {
+
+  async mounted() {
+    try {
+      let token = JSON.parse(store.state.user.TOKEN).value;
+      let meg = await store.dispatch("shopCart/getshopCartList", {
+        token,
+        id: store.state.user.USERINFO.id,
+      });
+      Toast(meg);
+    } catch (error) {
+      Toast(error);
+    }
     // this.cartList = JSON.parse(localStorage.getItem("cartList")) || [];
     // 使用 Vuex 商店的“state”对象中的“shopCartList”属性值初始化 Vue 组件的“cartList”数据属性。如果 `shopCartList`
     // 未定义或为假，则默认为空数组。

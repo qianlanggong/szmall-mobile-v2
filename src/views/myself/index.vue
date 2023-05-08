@@ -96,7 +96,11 @@ export default {
     async logout() {
       try {
         //请求成功
-        let meg = await store.dispatch("user/logout", store.state.user.USERID);
+        let token = JSON.parse(store.state.user.TOKEN).value;
+        let meg = await store.dispatch("user/logout", {
+          id: store.state.user.USERINFO.id,
+          token,
+        });
         this.$router.push("home");
         Toast(meg);
       } catch (error) {

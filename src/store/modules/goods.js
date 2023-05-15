@@ -3,6 +3,7 @@ import {
   requestMoreProducts,
   requestAddreassList,
   requestAddCardList,
+  requestAddAddress,
 } from "@/server";
 // state
 const state = {
@@ -63,13 +64,13 @@ const actions = {
     }
   },
   // 请求用户地址栏列表
-  async getAddressList({ commit }, token) {
+  async getAddressList({ commit }, val) {
     let headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${val.token}`,
       "Content-Type": "application/json",
-      token: token,
+      token: val.token,
     };
-    let result = await requestAddreassList(headers);
+    let result = await requestAddreassList(headers, val.id);
     console.log("😜🏀[ result ]-70", result);
     let {
       data: { status },
@@ -78,6 +79,25 @@ const actions = {
     } = result;
     if (status == 200) {
       commit("getAddressList", data);
+      return Promise.resolve(message);
+    } else {
+      return Promise.reject(new Error(message));
+    }
+  },
+  // 请求单个地址的接口
+  async addressAdd(store, val) {
+    let headers = {
+      Authorization: `Bearer ${val.token}`,
+      "Content-Type": "application/json",
+      token: val.token,
+    };
+    let result = await requestAddAddress(headers, val.data);
+    let {
+      data: { status },
+      data: { message },
+    } = result;
+    if (status == 200) {
+      // commit("getAddressList", data);
       return Promise.resolve(message);
     } else {
       return Promise.reject(new Error(message));

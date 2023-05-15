@@ -31,11 +31,23 @@ export const requestMoreProducts = (data) =>
     `/portal/psmProduct/search?pageNum=${data.pageNum}&pageSize=${data.pageSize}&sort=${data.sortWay}`
   );
 // 获取用户的所有收货地址
-export const requestAddreassList = (headers, data) =>
-  requestWithToenAJSON("/portal/member/address/list", "GET", headers, data);
+export const requestAddreassList = (headers, id) =>
+  requestWithToenAJSON(
+    `/portal/member/address/list?memberId=${id}`,
+    "GET",
+    headers
+  );
 // 增加用户的收货地址
 export const requestAddAddress = (headers, data) =>
   requestWithToenAJSON("/portal/member/address/add", "POST", headers, data);
+//增加爱用户进行编辑地址的接口
+export const requestEditAddress = (headers, data) =>
+  requestWithToenAJSON(
+    "/portal/member/address/getItem?id=5&memberId=11",
+    "GET",
+    headers,
+    data
+  );
 //查看商品的详情页
 export const requestProductDetail = (id) =>
   get(`/portal/psmProduct/detail/${id}`);

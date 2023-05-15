@@ -55,7 +55,7 @@ export default {
         { icon: "logistics", title: "待发货" },
         { icon: "after-sale", title: "待收货" },
         { icon: "comment-o", title: "待评价" },
-        { icon: "refund-o", title: "退款/售后" },
+        { icon: "refund-o", title: "售后" },
       ],
       avatar: null,
       nickname: null,

@@ -87,7 +87,8 @@ export default {
       this.$router.push("/add-address");
     },
     onAdd() {
-      Toast("新增地址");
+      // Toast("新增地址");
+      this.$router.push({ name: "addressAdd" });
     },
     onEdit(item, index) {
       this.$router.push({ name: "addressEdit" });
@@ -97,7 +98,8 @@ export default {
   async created() {
     try {
       let token = JSON.parse(store.state.user.TOKEN).value;
-      let meg = await store.dispatch("goods/getAddressList", token);
+      let id = store.state.user.USERINFO.id;
+      let meg = await store.dispatch("goods/getAddressList", { token, id });
       this.showLoading = false;
       Toast(meg);
     } catch (error) {
@@ -129,7 +131,7 @@ export default {
     // this.addressList
     if (!this.addressList.length) {
       Toast("请先添加收货地址");
-      this.$router.push("/add-address");
+      this.$router.push("/addressAdd");
     }
   },
 };

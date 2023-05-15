@@ -53,6 +53,14 @@ const routes = [
           title: "地址编辑",
         },
       },
+      {
+        path: "addressAdd",
+        name: "addressAdd",
+        component: () => import("@/views/myself/childPages/addressAdd.vue"),
+        meta: {
+          title: "地址添加",
+        },
+      },
     ],
   },
   {
